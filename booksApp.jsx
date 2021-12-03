@@ -5,7 +5,9 @@ function App() {
         Button,
         Modal,
         Card,
-        Image
+        Image,
+        ListGroup,
+        ListGroupItem
     } = ReactBootstrap;
     const [data, setData] = useState([]);
     const [query, setQuery] = useState("Code");
@@ -13,6 +15,11 @@ function App() {
     const [show, setShow] = useState(false);
     const [title, setTitle] = useState('Empty Title');
     const [cover, setCover] = useState('Empty Link');
+    const [author, setAuthor] = useState('Empty Title');
+    const [format, setFormat] = useState('Empty Title');
+    const [pages, setPages] = useState('Empty Title');
+    const [bio, setBio] = useState('Empty Title');
+    const [copy, setCopy] = useState('Empty Title');
 
     console.log("Rendering App");
 
@@ -40,23 +47,24 @@ function App() {
             //console.log(titles)
             //setData(titles);
             // console.log(result.data.title[0].titleweb)
-            // if ( $.fn.dataTable.isDataTable( '#example' ) ) {
-            //     table = $('#example').DataTable();
+
+            // if (!$.fn.dataTable.isDataTable('#books')) {
+            //     $('#books').DataTable({
+            //         //    ajax: "https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=code",
+            //         "order": [1, 'asc'],
+            //         "autoWidth": true,
+            //         language: {
+            //             'search': 'Search Table' /*Empty to remove the label*/
+            //         },
+
+            //     });
+
             // }
             // else {
-            //     table = $('#example').DataTable( {
-            //         paging: false
-            //     } );
+            //     $("#books").DataTable().ajax.reload(null, false);
             // }
 
-            $('#books').DataTable({
-                "order": [2, 'asc'],
-                "autoWidth": true,
-                language: {
-                    'search': 'Search Table' /*Empty to remove the label*/
-                },
 
-            });
             // $('#books tbody').on('click', 'tr', function () {
             //     /// do stuff here ///
             //     alert('hi');
@@ -64,6 +72,15 @@ function App() {
             //     console.log(query)
             // });
 
+            $('#books').DataTable({
+                //    ajax: "https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=code",
+                "order": [1, 'asc'],
+                "autoWidth": true,
+                language: {
+                    'search': 'Search' /*Empty to remove the label*/
+                },
+
+            });
         };
 
 
@@ -72,11 +89,16 @@ function App() {
     }, []);
     const handleClose = () => setShow(false);
 
-    const handleShow = (title, cover) => {
+    const handleShow = (title, cover, author, format, pages, bio, copy) => {
         setShow(true);
 
         setTitle(title);
         setCover(cover);
+        setAuthor(author);
+        setFormat(format);
+        setPages(pages);
+        setBio(bio);
+        setCopy(copy);
     }
     // const handleClick = () => {
     //   setQuery('lord');
@@ -87,11 +109,11 @@ function App() {
         <Container>
             <Image src="PRH-logo.png" />
             {/* <input
-        type="text"
-        value={query}
-        onChange={event => setQuery(event.target.value)}
-      />
-      <button
+                type="text"
+                value={query}
+                onChange={event => setQuery(event.target.value)}
+            /> */}
+            {/* <button
         type="button"
         onClick={() => setUrl("https://ghibliapi.herokuapp.com/films/")}
       >
@@ -116,7 +138,7 @@ function App() {
                                 <Button variant="outline-secondary"
                                     x={t.titleweb}
                                     onClick={() => {
-                                        handleShow(t.titleweb, t['@uri']);
+                                        handleShow(t.titleweb, t['@uri'], t.authorweb, t.formatname, t.pages, t.authorbio, t.flapcopy);
                                         console.log('Showing Banner...');
                                     }
                                     }><i class="fas fa-search-plus"></i>
@@ -147,7 +169,19 @@ function App() {
                 <Modal.Header closeButton>
                     <Modal.Title><i class="fas fa-book-open"></i> {title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body><Card.Img src={cover} style={{ width: '50%' }} fluid /></Modal.Body>
+                <Modal.Body>
+                    <ListGroup className="list-group-flush">
+                        <ListGroupItem><i class="far fa-bookmark"></i> {format}</ListGroupItem>
+                        <ListGroupItem><i class="fas fa-pen-fancy"></i> {author}</ListGroupItem>
+                        <ListGroupItem><i class="far fa-user"></i> {bio}</ListGroupItem>
+                        <ListGroupItem><i class="far fa-file-alt"></i> {copy}</ListGroupItem>
+                        <ListGroupItem>
+                            /
+                            <Card.Img src={cover} style={{ width: '50%' }} />
+                        </ListGroupItem>
+                    </ListGroup>
+                    {/* <Card.Img src={cover} style={{ width: '50%' }} fluid /> */}
+                </Modal.Body>
             </Modal>
             {/* <input
         type="text"
