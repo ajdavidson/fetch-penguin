@@ -149,7 +149,7 @@ function App() {
                             <td>{t.authorweb}</td>
                             <td>{t.onsaledate.substring(t.onsaledate.length - 4)}</td>
                             <td>{t.pages}</td>
-                            <td>{t.priceusa}</td>
+                            <td>${t.priceusa}</td>
                         </tr>
                     ))}
                 </tbody>
