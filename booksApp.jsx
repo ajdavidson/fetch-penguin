@@ -122,7 +122,7 @@ function App() {
             <table id="books" class="display" style={{ width: "100%" }}>
                 <thead>
                     <tr style={{ color: 'FF6600' }}>
-                        <th><i class="fas fa-search-plus"></i></th>
+                        <th></th>
                         {/* <th>Image</th> */}
                         <th>Title</th>
                         <th>Author</th>
@@ -135,7 +135,7 @@ function App() {
                     {data.map(t => (
                         <tr>
                             <td>
-                                <Button variant="outline-secondary"
+                                <Button variant="outline-*"
                                     x={t.titleweb}
                                     onClick={() => {
                                         handleShow(t.titleweb, t['@uri'], t.authorweb, t.formatname, t.pages, t.authorbio, t.flapcopy);
@@ -155,7 +155,7 @@ function App() {
                 </tbody>
                 <tfoot>
                     <tr style={{ color: 'FF6600' }}>
-                        <th><i class="fas fa-search-plus"></i></th>
+                        <th></th>
                         {/* <th>Image</th> */}
                         <th>Title</th>
                         <th>Author</th>
