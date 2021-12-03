@@ -106,7 +106,7 @@ function App() {
     //   console.log({ query })
     // }
     return (
-        <Container>
+        <Container fluid>
             <Image src="PRH-logo.png" />
             {/* <input
                 type="text"
@@ -126,8 +126,8 @@ function App() {
                         {/* <th>Image</th> */}
                         <th>Title</th>
                         <th>Author</th>
+                        <th>Format</th>
                         <th>Year</th>
-                        <th>Pages</th>
                         <th>Price</th>
                     </tr>
                 </thead>
@@ -147,8 +147,8 @@ function App() {
                             {/* <td><img height="55px" src={t['@uri']} /></td> */}
                             <td>{t.titleweb}</td>
                             <td>{t.authorweb}</td>
+                            <td>{t.formatname}</td>
                             <td>{t.onsaledate.substring(t.onsaledate.length - 4)}</td>
-                            <td>{t.pages}</td>
                             <td>${t.priceusa}</td>
                         </tr>
                     ))}
@@ -159,8 +159,8 @@ function App() {
                         {/* <th>Image</th> */}
                         <th>Title</th>
                         <th>Author</th>
+                        <th>Format</th>
                         <th>Year</th>
-                        <th>Pages</th>
                         <th>Price</th>
                     </tr>
                 </tfoot>
@@ -171,16 +171,14 @@ function App() {
                 </Modal.Header>
                 <Modal.Body>
                     <ListGroup className="list-group-flush">
-                        <ListGroupItem><i class="far fa-bookmark"></i> {format}</ListGroupItem>
-                        <ListGroupItem><i class="fas fa-pen-fancy"></i> {author}</ListGroupItem>
+                        <ListGroupItem><i class="far fa-file-alt"></i> {pages} pgs</ListGroupItem>
+                        <ListGroupItem><i class="fas fa-pen-nib"></i> {author}</ListGroupItem>
                         <ListGroupItem><i class="far fa-user"></i> {bio}</ListGroupItem>
-                        <ListGroupItem><i class="far fa-file-alt"></i> {copy}</ListGroupItem>
+                        <ListGroupItem><i class="far fa-bookmark"></i> {copy}</ListGroupItem>
                         <ListGroupItem>
-                            /
                             <Card.Img src={cover} style={{ width: '50%' }} />
                         </ListGroupItem>
                     </ListGroup>
-                    {/* <Card.Img src={cover} style={{ width: '50%' }} fluid /> */}
                 </Modal.Body>
             </Modal>
             {/* <input
