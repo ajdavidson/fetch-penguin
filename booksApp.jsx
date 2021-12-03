@@ -10,7 +10,7 @@ function App() {
         ListGroupItem
     } = ReactBootstrap;
     const [data, setData] = useState([]);
-    const [query, setQuery] = useState("Code");
+    const [query, setQuery] = useState("programming");
     const [url, setUrl] = useState(`https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`);
     const [show, setShow] = useState(false);
     const [title, setTitle] = useState('Empty Title');
