@@ -20,6 +20,9 @@ function App() {
   const [pages, setPages] = useState('Empty Title');
   const [bio, setBio] = useState('Empty Title');
   const [copy, setCopy] = useState('Empty Title');
+  const [isbn, setIsbn] = useState('0');
+  const [year, setYear] = useState('1');
+  const [price, setPrice] = useState(0);
 
   console.log("Rendering App");
 
@@ -92,9 +95,9 @@ function App() {
   }, []);
   const handleClose = () => setShow(false);
 
-  const handleShow = (title, cover, author, format, pages, bio, copy) => {
+  const handleShow = (title, cover, author, format, pages, bio, copy, isbn, year, price) => {
     setShow(true);
-
+    //year = year.substring(t.onsaledate.length - 4);
     setTitle(title);
     setCover(cover);
     setAuthor(author);
@@ -102,6 +105,9 @@ function App() {
     setPages(pages);
     setBio(bio);
     setCopy(copy);
+    setIsbn(isbn);
+    setYear(year.substring(year.length - 4));
+    setPrice(price);
   }
   // const handleClick = () => {
   //   setQuery('lord');
@@ -142,7 +148,7 @@ function App() {
                 <Button variant="outline-*"
                   x={t.titleweb}
                   onClick={() => {
-                    handleShow(t.titleweb, t['@uri'], t.authorweb, t.formatname, t.pages, t.authorbio, t.flapcopy);
+                    handleShow(t.titleweb, t['@uri'], t.authorweb, t.formatname, t.pages, t.authorbio, t.flapcopy, t.isbn, t.onsaledate, t.priceusa);
                     console.log('Showing Banner...');
                   }
                   }><i class="fas fa-search-plus" style={{ color: 'FF6600' }}></i>
@@ -173,16 +179,21 @@ function App() {
       </table>
       <Modal show={show} size="xl" onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title><i class="fas fa-book-open" style={{ color: 'FF6600' }}></i> {title}</Modal.Title>
+          <Modal.Title> <h1><i class="fas fa-book-open" style={{ color: 'FF6600' }}></i> {title}</h1></Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
           <ListGroup className="list-group-flush">
-            <ListGroupItem ><i class="fas fa-book" style={{ color: 'FF6600' }}></i> <Card.Img src={cover} style={{ width: '250px', float: 'right', paddingLeft: '25px' }} /> <span dangerouslySetInnerHTML={{ __html: copy }} /></ListGroupItem>
+            <ListGroupItem ><i class="fas fa-book fa-3x" style={{ color: 'FF6600', float: 'left', paddingRight: '10px' }}></i> <Card.Img src={cover} style={{ width: '250px', float: 'right', paddingLeft: '25px' }} /> <span dangerouslySetInnerHTML={{ __html: copy }} /></ListGroupItem>
             <ListGroupItem><i class="fas fa-user" style={{ color: 'FF6600' }}></i> <span dangerouslySetInnerHTML={{ __html: bio }} /></ListGroupItem>
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>
-          <i class="fas fa-file-alt" style={{ color: 'FF6600' }}></i> {pages} pgs
+          <Modal.Title style={{ paddingRight: '20px' }}><i class="fas fa-bookmark" style={{ color: 'FF6600' }}></i> {format} </Modal.Title>
+          <Modal.Title style={{ paddingRight: '20px' }}><i class="fab fa-readme" style={{ color: 'FF6600' }}></i> {pages} pgs </Modal.Title>
+          <Modal.Title style={{ paddingRight: '20px' }}><i class="fas fa-calendar-alt" style={{ color: 'FF6600' }}></i> {year} </Modal.Title>
+          <Modal.Title style={{ paddingRight: '20px' }}><i class="fas fa-barcode" style={{ color: 'FF6600' }}></i> {isbn} </Modal.Title>
+          <Modal.Title style={{ color: 'FF6600' }}> ${price} </Modal.Title>
         </Modal.Footer>
       </Modal>
       {/* <input
