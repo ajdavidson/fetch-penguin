@@ -127,6 +127,7 @@ function App() {
                         <th>Title</th>
                         <th>Author</th>
                         <th>Format</th>
+                        <th>Pages</th>
                         <th>Year</th>
                         <th>Price</th>
                     </tr>
@@ -141,13 +142,14 @@ function App() {
                                         handleShow(t.titleweb, t['@uri'], t.authorweb, t.formatname, t.pages, t.authorbio, t.flapcopy);
                                         console.log('Showing Banner...');
                                     }
-                                    }><i class="fas fa-search-plus"></i>
+                                    }><i class="fas fa-search-plus" style={{ color: 'FF6600' }}></i>
                                 </Button>
                             </td>
                             {/* <td><img height="55px" src={t['@uri']} /></td> */}
                             <td>{t.titleweb}</td>
                             <td>{t.authorweb}</td>
                             <td>{t.formatname}</td>
+                            <td>{t.pages}</td>
                             <td>{t.onsaledate.substring(t.onsaledate.length - 4)}</td>
                             <td>${t.priceusa}</td>
                         </tr>
@@ -160,26 +162,25 @@ function App() {
                         <th>Title</th>
                         <th>Author</th>
                         <th>Format</th>
+                        <th>Pages</th>
                         <th>Year</th>
                         <th>Price</th>
                     </tr>
                 </tfoot>
             </table>
-            <Modal show={show} size="lg" onHide={handleClose}>
+            <Modal show={show} size="xl" onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title><i class="fas fa-book-open"></i> {title}</Modal.Title>
+                    <Modal.Title><i class="fas fa-book-open" style={{ color: 'FF6600' }}></i> {title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <ListGroup className="list-group-flush">
-                        <ListGroupItem><i class="far fa-file-alt"></i> {pages} pgs</ListGroupItem>
-                        <ListGroupItem><i class="fas fa-pen-nib"></i> {author}</ListGroupItem>
-                        <ListGroupItem><i class="far fa-user"></i> {bio}</ListGroupItem>
-                        <ListGroupItem><i class="far fa-bookmark"></i> {copy}</ListGroupItem>
-                        <ListGroupItem>
-                            <Card.Img src={cover} style={{ width: '50%' }} />
-                        </ListGroupItem>
+                        <ListGroupItem ><i class="fas fa-book" style={{ color: 'FF6600' }}></i> <Card.Img src={cover} style={{ width: '250px', float: 'right' }} /> <span dangerouslySetInnerHTML={{ __html: copy }} /></ListGroupItem>
+                        <ListGroupItem><i class="fas fa-user" style={{ color: 'FF6600' }}></i> <span dangerouslySetInnerHTML={{ __html: bio }} /></ListGroupItem>
                     </ListGroup>
                 </Modal.Body>
+                <Modal.Footer>
+                    <i class="fas fa-file-alt" style={{ color: 'FF6600' }}></i> {pages} pgs
+                </Modal.Footer>
             </Modal>
             {/* <input
         type="text"
