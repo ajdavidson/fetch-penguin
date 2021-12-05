@@ -41,9 +41,16 @@
         background: none;
         color: black !important;
     }
+
+    #loading{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
 </style>
 
 <body>
+<div id="loading" className="center-horizontally" style={{width: "100%", textAlign:'center'}}><b>Loading...</b></div>
     <!-- We will put our React component inside this div. -->
     <div id="root"></div>
 
