@@ -34,11 +34,13 @@ function App() {
 
   useEffect(() => {
     $("#spinner").show()
+    $("#loading").show()
     console.log("Fetching data...");
     const fetchData = async () => {
       const result = await axios(url);
       setData(result.data.title);
       console.log(result.data.title)
+
       // var titles = result.data.title.map(t => {
       //     return titles = {
       //         image: t['@uri'],
@@ -118,6 +120,7 @@ function App() {
 
       $("#books").show()
       $("#spinner").hide()
+      $("#loading").hide()
 
     });
 
@@ -177,7 +180,6 @@ function App() {
               <Spinner className="spinner" id="spinner" size="sm" animation="border" role="status" style={{color: 'FF6600'}}/>
             </Button>
             <InputGroup.Text>
-
               Enter Keywords</InputGroup.Text>
             <FormControl
               value={query}
@@ -215,7 +217,7 @@ function App() {
         </tr>
         </thead>
         <tbody>
-        {data.map(t => (
+        {!data ? console.log('no data') : data.map(t => (
           <tr>
             <td>
               <Button variant="outline-*"
@@ -250,6 +252,7 @@ function App() {
           </tr>
         </tfoot> */}
       </table>
+
       {/*<Spinner className="spinner" id="spinner" size="lg" animation="grow" variant="secondary" role="status"/>*/}
       <Modal show={show} size="xl" onHide={handleClose}>
         <Modal.Header closeButton>
