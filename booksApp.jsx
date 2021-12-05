@@ -1,5 +1,5 @@
 function App() {
-  const { useState, useEffect } = React;
+  const {useState, useEffect} = React;
   const {
     Container,
     Button,
@@ -7,7 +7,12 @@ function App() {
     Card,
     Image,
     ListGroup,
-    ListGroupItem
+    ListGroupItem,
+    InputGroup,
+    FormControl,
+    Row,
+    Col,
+    Spinner
   } = ReactBootstrap;
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("programming");
@@ -23,11 +28,12 @@ function App() {
   const [isbn, setIsbn] = useState('0');
   const [year, setYear] = useState('1');
   const [price, setPrice] = useState(0);
+  //const [isLoading, setIsLoading] = useState(true);
 
   console.log("Rendering App");
 
   useEffect(() => {
-
+    $("#spinner").show()
     console.log("Fetching data...");
     const fetchData = async () => {
       const result = await axios(url);
@@ -51,20 +57,34 @@ function App() {
       //setData(titles);
       // console.log(result.data.title[0].titleweb)
 
-      // if (!$.fn.dataTable.isDataTable('#books')) {
-      //     $('#books').DataTable({
-      //         //    ajax: "https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=code",
-      //         "order": [1, 'asc'],
-      //         "autoWidth": true,
-      //         language: {
-      //             'search': 'Search Table' /*Empty to remove the label*/
-      //         },
+      if (!$.fn.dataTable.isDataTable('#books')) {
+        $('#books').DataTable({
+          //    ajax: "https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=code",
+          destroy: true,
+          "order": [1, 'asc'],
+          "autoWidth": false,
+          "scrollY": "60vh",
+          "scrollCollapse": true,
+          language: {
+            'search': `<i class="fas fa-search fa-lg" style="color: #FF6600"></i> ` /*Empty to remove the label*/
+          },
+          "columns": [
+            {"width": "1%"},
+            {"width": "40%"},
+            {"width": "20%"},
+            {"width": "20%"},
+            {"width": "05%"},
+            {"width": "05%"},
+            {"width": "05%"},
+            // { "width": "20px" }
+          ],
 
-      //     });
+        });
 
-      // }
+      }
       // else {
-      //     $("#books").DataTable().ajax.reload(null, false);
+      //     $("#books").DataTable().clear();
+      //   $("#books").DataTable().draw();
       // }
 
 
@@ -75,24 +95,52 @@ function App() {
       //     console.log(query)
       // });
 
-      $('#books').DataTable({
-        //    ajax: "https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=code",
-        fixedHeader: true,
-        scrollY: '67vh',
-        scrollCollapse: true,
-        "order": [1, 'asc'],
-        "autoWidth": true,
-        language: {
-          'search': 'Search' /*Empty to remove the label*/
-        },
 
-      });
+      // $('#books').DataTable({
+      //   //    ajax: "https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=code",
+      //   fixedHeader: true,
+      //   scrollY: '67vh',
+      //   scrollCollapse: true,
+      //   "order": [1, 'asc'],
+      //   "autoWidth": true,
+      //   language: {
+      //     'search': 'Search' /*Empty to remove the label*/
+      //   },
+      //
+      // });
+
+
     };
 
 
-    fetchData();
+    fetchData().then(r => {
+      //$("#books").hide()
 
-  }, []);
+      $("#books").show()
+      $("#spinner").hide()
+
+    });
+
+  }, [url]);
+
+  function handlePre() {
+    //$("#books").DataTable().clear();
+    //$("#books").DataTable().draw();
+    $("#books").hide()
+    $("#books").DataTable().destroy();
+
+
+  }
+
+  function handlePost() {
+    //let url = `https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`
+    //$("#books").DataTable().url(url).reload();
+
+    setUrl(`https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`)
+
+    //$("#books").show()
+  }
+
   const handleClose = () => setShow(false);
 
   const handleShow = (title, cover, author, format, pages, bio, copy, isbn, year, price) => {
@@ -114,55 +162,80 @@ function App() {
   //   alert(query);
   //   console.log({ query })
   // }
+
   return (
     <Container fluid>
-      <Image src="PRH-logo.png" width="250px" />
-      {/* <input
-                type="text"
-                value={query}
-                onChange={event => setQuery(event.target.value)}
-            /> */}
-      {/* <button
-        type="button"
-        onClick={() => setUrl("https://ghibliapi.herokuapp.com/films/")}
-      >
-        Search
-      </button> */}
-      <table id="books" class="display" style={{ width: "100%" }}>
+
+      <Row>
+        <Col>
+          <Image src="PRH-logo.png" width="250px"/>
+
+        </Col>
+        <Col className="d-flex align-items-end" style={{paddingBottom:'10px'}}>
+          <InputGroup>
+            <Button variant="outline-secondary" id="button-addon1" style={{width:'50px',border: '0',color: 'FF6600'}}>
+              <Spinner className="spinner" id="spinner" size="sm" animation="border" role="status" style={{color: 'FF6600'}}/>
+            </Button>
+            <InputGroup.Text>
+
+              Enter Keywords</InputGroup.Text>
+            <FormControl
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+              aria-label="Recipient's username with two button addons"
+            />
+            <Button
+              variant="outline-secondary"
+              onClick={() => {
+                handlePre()
+
+                handlePost()
+                //handlePost().then(() => $("#books").show())
+                //setUrl(`https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`)
+                //$("#books").DataTable().draw();
+              }
+              }
+
+            >Load</Button>
+          </InputGroup>
+
+        </Col>
+      </Row>
+
+      <table id="books" class="display" style={{width: "100%"}}>
         <thead>
-          <tr style={{ color: 'FF6600' }}>
-            <th></th>
-            {/* <th>Image</th> */}
-            <th>Title</th>
-            <th>Author</th>
-            <th>Format</th>
-            <th>Pages</th>
-            <th>Year</th>
-            <th>Price</th>
-          </tr>
+        <tr style={{color: 'FF6600'}}>
+          <th></th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Format</th>
+          <th>Pages</th>
+          <th>Year</th>
+          <th>Price</th>
+        </tr>
         </thead>
         <tbody>
-          {data.map(t => (
-            <tr>
-              <td>
-                <Button variant="outline-*"
-                  x={t.titleweb}
-                  onClick={() => {
-                    handleShow(t.titleweb, t['@uri'], t.authorweb, t.formatname, t.pages, t.authorbio, t.flapcopy, t.isbn, t.onsaledate, t.priceusa);
-                    console.log('Showing Banner...');
-                  }
-                  }><i class="fas fa-search-plus" style={{ color: 'FF6600' }}></i>
-                </Button>
-              </td>
-              {/* <td><img height="55px" src={t['@uri']} /></td> */}
-              <td>{t.titleweb}</td>
-              <td>{t.authorweb}</td>
-              <td>{t.formatname}</td>
-              <td>{t.pages}</td>
-              <td>{t.onsaledate.substring(t.onsaledate.length - 4)}</td>
-              <td>${t.priceusa}</td>
-            </tr>
-          ))}
+        {data.map(t => (
+          <tr>
+            <td>
+              <Button variant="outline-*"
+                      x={t.titleweb}
+                      onClick={() => {
+                        handleShow(t.titleweb, t['@uri'], t.authorweb, t.formatname, t.pages, t.authorbio, t.flapcopy, t.isbn, t.onsaledate, t.priceusa);
+                        console.log('Showing Banner...');
+                      }
+                      }><i class="fas fa-search-plus" style={{color: 'FF6600'}}></i>
+              </Button>
+            </td>
+            {/* <td><img height="55px" src={t['@uri']} /></td> */}
+            <td>{t.titleweb}</td>
+            <td>{t.authorweb}</td>
+            <td>{t.formatname}</td>
+            <td>{t.pages}</td>
+            <td>{t.onsaledate.substring(t.onsaledate.length - 4)}</td>
+            <td>${t.priceusa}</td>
+          </tr>
+        ))}
         </tbody>
         {/* <tfoot>
           <tr style={{ color: 'FF6600' }}>
@@ -177,23 +250,37 @@ function App() {
           </tr>
         </tfoot> */}
       </table>
+      {/*<Spinner className="spinner" id="spinner" size="lg" animation="grow" variant="secondary" role="status"/>*/}
       <Modal show={show} size="xl" onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title> <h1><i class="fas fa-book-open" style={{ color: 'FF6600' }}></i> {title}</h1></Modal.Title>
+          <Modal.Title><h1><i class="fas fa-book-open" style={{color: 'FF6600'}}></i> {title}</h1></Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <ListGroup className="list-group-flush">
-            <ListGroupItem ><i class="fas fa-book fa-3x" style={{ color: 'FF6600', float: 'left', paddingRight: '10px' }}></i> <Card.Img src={cover} style={{ width: '250px', float: 'right', paddingLeft: '25px' }} /> <span dangerouslySetInnerHTML={{ __html: copy }} /></ListGroupItem>
-            <ListGroupItem><i class="fas fa-user" style={{ color: 'FF6600' }}></i> <span dangerouslySetInnerHTML={{ __html: bio }} /></ListGroupItem>
+            <ListGroupItem><i class="fas fa-book fa-3x"
+                              style={{color: 'FF6600', float: 'left', paddingRight: '10px'}}/>
+              <Card.Img src={cover}
+                        style={{
+                          width: '250px',
+                          float: 'right',
+                          paddingLeft: '25px'
+                        }}/> <span
+                dangerouslySetInnerHTML={{__html: copy}}/></ListGroupItem>
+            <ListGroupItem><i class="fas fa-user" style={{color: 'FF6600'}}></i> <span
+              dangerouslySetInnerHTML={{__html: bio}}/></ListGroupItem>
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Modal.Title style={{ paddingRight: '20px' }}><i class="fas fa-bookmark" style={{ color: 'FF6600' }}></i> {format} </Modal.Title>
-          <Modal.Title style={{ paddingRight: '20px' }}><i class="fab fa-readme" style={{ color: 'FF6600' }}></i> {pages} pgs </Modal.Title>
-          <Modal.Title style={{ paddingRight: '20px' }}><i class="fas fa-calendar-alt" style={{ color: 'FF6600' }}></i> {year} </Modal.Title>
-          <Modal.Title style={{ paddingRight: '20px' }}><i class="fas fa-barcode" style={{ color: 'FF6600' }}></i> {isbn} </Modal.Title>
-          <Modal.Title style={{ color: 'FF6600' }}> ${price} </Modal.Title>
+          <Modal.Title style={{paddingRight: '20px'}}><i class="fas fa-bookmark" style={{color: 'FF6600'}}></i> {format}
+          </Modal.Title>
+          <Modal.Title style={{paddingRight: '20px'}}><i class="fab fa-readme"
+                                                         style={{color: 'FF6600'}}></i> {pages} pgs </Modal.Title>
+          <Modal.Title style={{paddingRight: '20px'}}><i class="fas fa-calendar-alt"
+                                                         style={{color: 'FF6600'}}></i> {year} </Modal.Title>
+          <Modal.Title style={{paddingRight: '20px'}}><i class="fas fa-barcode" style={{color: 'FF6600'}}></i> {isbn}
+          </Modal.Title>
+          <Modal.Title style={{color: 'FF6600'}}> ${price} </Modal.Title>
         </Modal.Footer>
       </Modal>
       {/* <input
@@ -216,9 +303,10 @@ function App() {
                 </ul>
             ))
             } */}
-    </Container >
+    </Container>
   );
 }
+
 // ========================================
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App/>, document.getElementById("root"));
 
