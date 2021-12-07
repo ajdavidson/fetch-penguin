@@ -33,6 +33,7 @@ function App() {
   console.log("Rendering App");
 
   useEffect(() => {
+    $("#books").hide()
     $("#spinner").show()
     $("#loading").show()
     console.log("Fetching data...");
@@ -61,7 +62,24 @@ function App() {
 
       if (!$.fn.dataTable.isDataTable('#books')) {
         $('#books').DataTable({
-
+          destroy: true,
+          "order": [1, 'asc'],
+          "autoWidth": false,
+          //"scrollY": 450,
+          //"scrollCollapse": true,
+          language: {
+            search: `<i class="fas fa-search fa-lg" style="color: #FF6600"></i> ` /*Empty to remove the label*/
+          },
+          "columns": [
+            {"width": "1%"},
+            {"width": "40%"},
+            {"width": "20%"},
+            {"width": "20%"},
+            {"width": "05%"},
+            {"width": "05%"},
+            {"width": "05%"},
+            // { "width": "20px" }
+          ],
 
         });
 
@@ -203,7 +221,7 @@ function App() {
         <tbody>
         {!data ? console.log('no data') : data.map(t => (
           <tr>
-            <td>
+            <td width={'100px'}>
               <Button variant="outline-*"
                       x={t.titleweb}
                       onClick={() => {
