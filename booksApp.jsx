@@ -183,7 +183,7 @@ function App() {
             <InputGroup.Text style={{color: 'FF6600', background: 'none', width: '50px', border: '0'}}>
               <Spinner className="spinner" id="spinner" size="sm" animation="border" role="status"
                        style={{color: 'FF6600'}}/></InputGroup.Text>
-            <InputGroup.Text style={{background: 'none'}}>
+            <InputGroup.Text>
               Keywords or Phrase:</InputGroup.Text>
             <FormControl
               placeholder={query}
