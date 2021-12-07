@@ -71,7 +71,8 @@ function App() {
           //"scrollY": 450,
           //"scrollCollapse": true,
           language: {
-            search: `<i class="fas fa-search fa-lg" style="color: #FF6600"></i> ` /*Empty to remove the label*/
+            search: `<i class="fas fa-search fa-lg" style="color: #FF6600"></i> `,/*Empty to remove the label*/
+            searchPlaceholder: "Search Table",
           },
           "columns": [
             {"width": "1%"},
@@ -206,7 +207,7 @@ function App() {
                 //$("#books").DataTable().draw();
               }
               }>
-              Load
+              Load Table
             </Button>
           </InputGroup>
           {/*<InputGroup>*/}
