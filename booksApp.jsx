@@ -299,7 +299,7 @@ function App() {
 
         <Modal.Body>
           <ListGroup className="list-group-flush">
-            <ListGroupItem><i className="fas fa-book-open fa-3x"
+            <ListGroupItem><i className="fab fa-readme fa-3x"
                               style={{color: 'FF6600', float: 'left', paddingRight: '10px'}}></i>
               <Card.Img src={cover}
                         style={{
@@ -315,7 +315,7 @@ function App() {
         <Modal.Footer>
           <Modal.Title style={{paddingRight: '20px'}}><i class="fas fa-bookmark" style={{color: 'FF6600'}}></i> {format}
           </Modal.Title>
-          <Modal.Title style={{paddingRight: '20px'}}><i class="fab fa-readme"
+          <Modal.Title style={{paddingRight: '20px'}}><i className="fas fa-book-open"
                                                          style={{color: 'FF6600'}}></i> {pages} pgs </Modal.Title>
           <Modal.Title style={{paddingRight: '20px'}}><i class="fas fa-calendar-alt"
                                                          style={{color: 'FF6600'}}></i> {year} </Modal.Title>
