@@ -33,6 +33,7 @@ function App() {
   console.log("Rendering App");
 
   useEffect(() => {
+    $("#books").hide()
     $("#spinner").show()
     $("#loading").show()
     console.log("Fetching data...");
@@ -61,7 +62,27 @@ function App() {
 
       if (!$.fn.dataTable.isDataTable('#books')) {
         $('#books').DataTable({
-
+          destroy: true,
+          "order": [1, 'asc'],
+          "autoWidth": false,
+          columnDefs: [
+            { orderable: false, targets: 0 }
+          ],
+          //"scrollY": 450,
+          //"scrollCollapse": true,
+          language: {
+            search: `<i class="fas fa-search fa-lg" style="color: #FF6600"></i> ` /*Empty to remove the label*/
+          },
+          "columns": [
+            {"width": "1%"},
+            {"width": "40%"},
+            {"width": "20%"},
+            {"width": "20%"},
+            {"width": "05%"},
+            {"width": "05%"},
+            {"width": "05%"},
+            // { "width": "20px" }
+          ],
 
         });
 
@@ -157,20 +178,25 @@ function App() {
           <Image src="PRH-logo.png" width="250px"/>
 
         </Col>
-        <Col className="d-flex align-items-end" style={{paddingBottom:'10px'}}>
-          <InputGroup>
-            <Button variant="outline-secondary" id="button-addon1" style={{width:'50px',border: '0',color: 'FF6600'}}>
-              <Spinner className="spinner" id="spinner" size="sm" animation="border" role="status" style={{color: 'FF6600'}}/>
-            </Button>
-            <InputGroup.Text>
-              Enter Keywords</InputGroup.Text>
+        <Col className="d-flex align-items-end" style={{paddingBottom: '10px'}}>
+          <InputGroup className="mb-3">
+            <InputGroup.Text style={{color: 'FF6600', background: 'none', width: '50px', border: '0'}}>
+              <Spinner className="spinner" id="spinner" size="sm" animation="border" role="status"
+                       style={{color: 'FF6600'}}/></InputGroup.Text>
+            <InputGroup.Text style={{background: 'none'}}>
+              Keywords or Phrase:</InputGroup.Text>
             <FormControl
-              value={query}
+              placeholder={query}
+              aria-label="Keywords"
+              aria-describedby="basic-addon2"
+              //value={query}
               onChange={event => setQuery(event.target.value)}
               aria-label="Recipient's username with two button addons"
             />
             <Button
+              style={{backgroundColor: 'FF6600', color: 'white'}}
               variant="outline-secondary"
+              id="button-load"
               onClick={() => {
                 handlePre()
 
@@ -179,10 +205,37 @@ function App() {
                 //setUrl(`https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`)
                 //$("#books").DataTable().draw();
               }
-              }
-
-            >Load</Button>
+              }>
+              Load
+            </Button>
           </InputGroup>
+          {/*<InputGroup>*/}
+          {/*  <Button variant="outline-secondary" id="button-addon1"*/}
+          {/*          style={{width: '50px', border: '0', color: 'FF6600'}}>*/}
+          {/*    <Spinner className="spinner" id="spinner" size="sm" animation="border" role="status"*/}
+          {/*             style={{color: 'FF6600'}}/>*/}
+          {/*  </Button>*/}
+          {/*  <InputGroup.Text style={{color: 'FF6600',background:'none'}}>*/}
+          {/*    Enter Keywords</InputGroup.Text>*/}
+          {/*  <FormControl*/}
+          {/*    value={query}*/}
+          {/*    onChange={event => setQuery(event.target.value)}*/}
+          {/*    aria-label="Recipient's username with two button addons"*/}
+          {/*  />*/}
+          {/*  <Button*/}
+          {/*    variant="outline-secondary"*/}
+          {/*    onClick={() => {*/}
+          {/*      handlePre()*/}
+
+          {/*      handlePost()*/}
+          {/*      //handlePost().then(() => $("#books").show())*/}
+          {/*      //setUrl(`https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`)*/}
+          {/*      //$("#books").DataTable().draw();*/}
+          {/*    }*/}
+          {/*    }*/}
+
+          {/*  >Load</Button>*/}
+          {/*</InputGroup>*/}
 
         </Col>
       </Row>
@@ -203,7 +256,7 @@ function App() {
         <tbody>
         {!data ? console.log('no data') : data.map(t => (
           <tr>
-            <td>
+            <td width={'100px'}>
               <Button variant="outline-*"
                       x={t.titleweb}
                       onClick={() => {
@@ -240,13 +293,14 @@ function App() {
       {/*<Spinner className="spinner" id="spinner" size="lg" animation="grow" variant="secondary" role="status"/>*/}
       <Modal show={show} size="xl" onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title><h1><i class="fas fa-book-open" style={{color: 'FF6600'}}></i> {title}</h1></Modal.Title>
+          <Modal.Title><h1><i className="fas fa-book"
+                              style={{color: 'FF6600'}}/> {title}</h1></Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <ListGroup className="list-group-flush">
-            <ListGroupItem><i class="fas fa-book fa-3x"
-                              style={{color: 'FF6600', float: 'left', paddingRight: '10px'}}/>
+            <ListGroupItem><i className="fas fa-book-open fa-3x"
+                              style={{color: 'FF6600', float: 'left', paddingRight: '10px'}}></i>
               <Card.Img src={cover}
                         style={{
                           width: '250px',
