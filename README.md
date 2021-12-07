@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <img src="./demo.png" alt="Fetch Penguin" />
+  <img src="./demo.gif" alt="Fetch Penguin" />
 
   &#xa0;
 
@@ -79,7 +79,7 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 $ git clone https://github.com/ajdavidson/fetch-ghibli
 
 # Access
-$ cd fetch-ghibli
+$ cd fetch-penguin
 
 # Install dependencies
 $ http-server

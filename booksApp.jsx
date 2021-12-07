@@ -68,8 +68,8 @@ function App() {
           columnDefs: [
             { orderable: false, targets: 0 }
           ],
-          //"scrollY": 450,
-          //"scrollCollapse": true,
+          // "scrollY": 450,
+          // "scrollCollapse": true,
           language: {
             search: `<i class="fas fa-search fa-lg" style="color: #FF6600"></i> `,/*Empty to remove the label*/
             searchPlaceholder: "Search Table",
