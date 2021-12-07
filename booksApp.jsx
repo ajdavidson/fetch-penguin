@@ -61,25 +61,7 @@ function App() {
 
       if (!$.fn.dataTable.isDataTable('#books')) {
         $('#books').DataTable({
-          //    ajax: "https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=code",
-          destroy: true,
-          "order": [1, 'asc'],
-          "autoWidth": false,
-          "scrollY": "60vh",
-          "scrollCollapse": true,
-          language: {
-            'search': `<i class="fas fa-search fa-lg" style="color: #FF6600"></i> ` /*Empty to remove the label*/
-          },
-          "columns": [
-            {"width": "1%"},
-            {"width": "40%"},
-            {"width": "20%"},
-            {"width": "20%"},
-            {"width": "05%"},
-            {"width": "05%"},
-            {"width": "05%"},
-            // { "width": "20px" }
-          ],
+
 
         });
 
@@ -122,6 +104,7 @@ function App() {
       $("#spinner").hide()
       $("#loading").hide()
 
+
     });
 
   }, [url]);
@@ -131,7 +114,7 @@ function App() {
     //$("#books").DataTable().draw();
     $("#books").hide()
     $("#books").DataTable().destroy();
-
+    // $("thead", $("#books").DataTable()).remove();
 
   }
 
@@ -205,6 +188,7 @@ function App() {
       </Row>
 
       <table id="books" class="display" style={{width: "100%"}}>
+        {/*<caption>Result Table for Keyword: {query} </caption>*/}
         <thead>
         <tr style={{color: 'FF6600'}}>
           <th></th>
@@ -224,7 +208,7 @@ function App() {
                       x={t.titleweb}
                       onClick={() => {
                         handleShow(t.titleweb, t['@uri'], t.authorweb, t.formatname, t.pages, t.authorbio, t.flapcopy, t.isbn, t.onsaledate, t.priceusa);
-                        console.log('Showing Banner...');
+                        console.log('Zoom...');
                       }
                       }><i class="fas fa-search-plus" style={{color: 'FF6600'}}></i>
               </Button>
@@ -286,26 +270,7 @@ function App() {
           <Modal.Title style={{color: 'FF6600'}}> ${price} </Modal.Title>
         </Modal.Footer>
       </Modal>
-      {/* <input
-        type="text"
-        value={query}
-        onChange={event => setQuery(event.target.value)}
-      />
-      <button
-        type="button"
-        onClick={() => setUrl("https://ghibliapi.herokuapp.com/films/")}
-      >
-        Search
-      </button> */}
-      {/* {data.map(t => (
-                <ul style={{ listStyleType: "none" }}>
-                    <li>{t.titleweb}</li>
-                    <li>{t.authorweb}</li>
-                    <li>{movie.release_date}</li>
-                    <li><img src={movie.image} width="20%" /></li>
-                </ul>
-            ))
-            } */}
+
     </Container>
   );
 }
