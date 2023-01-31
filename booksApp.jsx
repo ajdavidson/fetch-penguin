@@ -17,7 +17,9 @@ function App() {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("programming");
   //const [url, setUrl] = useState(`https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`);
-  const [url, setUrl] = useState(`https://api.penguinrandomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`);
+  //const [url, setUrl] = useState(`https://api.penguinrandomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`);
+  const [url, setUrl] = useState(`https://api.penguinrandomhouse.com/resources/v2/title/domains/PRH.US/titles?api_key=sbzpd7jx73t4pheqnuy7ecj2&start=0&max=100&expandLevel=1&search=${query}`);
+
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('Empty Title');
   const [cover, setCover] = useState('Empty Link');
@@ -145,7 +147,8 @@ function App() {
     //let url = `https://reststop.randomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`
     //$("#books").DataTable().url(url).reload();
 
-    setUrl(`https://api.penguinrandomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`)
+    //setUrl(`https://api.penguinrandomhouse.com/resources/titles?start=0&max=100&expandLevel=1&search=${query}`)
+    const [url, setUrl] = useState(`https://api.penguinrandomhouse.com/resources/v2/title/domains/PRH.US/titles?api_key=sbzpd7jx73t4pheqnuy7ecj2&start=0&max=100&expandLevel=1&search=${query}`);
 
     //$("#books").show()
   }
